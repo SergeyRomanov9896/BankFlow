@@ -1,0 +1,120 @@
+[project]
+name = "bankflow"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "SergeyRomanov9896",email = "automag2016@mail.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas (>=3.0.3,<4.0.0)",
+    "openpyxl (>=3.1.5,<4.0.0)",
+    "requests (>=2.34.2,<3.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "bankflow", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+lint = [
+    "ruff (>=0.15.15,<0.16.0)",
+    "mypy (>=2.1.0,<3.0.0)",
+    "flake8 (>=7.3.0,<8.0.0)"
+]
+
+
+# === 🔧 RUFF: Основные настройки ===
+[tool.ruff]
+# Указываем версию Python, под которую пишем код (для правильных проверок синтаксиса)
+target-version = "py312" # указать актуальную версию python для проекта
+
+# Максимальная длина строки (стандарт PEP 8 рекомендует 79, но часто используют 88 или 100)
+line-length = 119
+
+# Исключаем из проверки определенные папки
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+	"__pycache__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+    "migrations",  # Часто миграции Django/SQLAlchemy не линтят
+]
+
+# === 📋 RUFF: Правила линтинга ===
+[tool.ruff.lint]
+# Выбираем наборы правил:
+# E - pycodestyle errors
+# F - Pyflakes
+# I - isort (сортировка импортов)
+# N - pep8-naming
+# W - pycodestyle warnings
+# B - flake8-bugbear (поиск частых ошибок)
+# UP - pyupgrade (автообновление синтаксиса под новую версию Python)
+# C90 - mccabe (сложность кода)
+select = ["E", "F", "I", "N", "W", "B", "UP", "C90"]
+
+# Игнорируем конкретные правила (если они вам мешают)
+# Например, E501 - это проверка длины строки, но мы уже задали line-length выше,
+# иногда полезно игнорировать, если форматер сам ломает строки.
+ignore = [
+    "E501",  # Line too long (управляется через line-length и форматер)
+    "B008",  # Do not perform function calls in argument defaults (часто нужно для FastAPI/DI)
+]
+
+# Разрешаем автофикс для определенных правил
+fixable = ["ALL"]
+unfixable = []
+
+# === 📦 RUFF: Сортировка импортов ===
+[tool.ruff.lint.isort]
+known-first-party = ["BankFlow"]  # Имя проекта
+
+# === 🎨 RUFF: Форматирование кода ===
+[tool.ruff.format]
+# Использовать двойные кавычки для строк
+quote-style = "double"
+# Отступы пробелами
+indent-style = "space"
+# Перенос строк в конце файла
+skip-magic-trailing-comma = false
+# Кодировка
+line-ending = "auto"
+
+[tool.flake8]
+max-line-length = 119
+ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", "venv", ".venv"]
+
+# === 🔍 MYPY: Статическая проверка типов ===
+[tool.mypy]
+disallow_untyped_defs = true # Требует аннотации типов для всех функций.
+# Запрещает неявный None. Нужно писать Optional[int] или int | None, а не просто x: int = None.
+no_implicit_optional = true
+# Предупреждает, если функция возвращает Any. Помогает найти места, где теряется информация о типах.
+warn_return_any = true
+# Исключает папки из проверки. mypy не будет сканировать виртуальное окружение и кэш Python.
+exclude = ["venv", "__pycache__"]
+explicit_package_bases = true # Позволяет запускать mypy для папки src/ без конфликтов имён модулей
