@@ -24,7 +24,8 @@ build-backend = "poetry.core.masonry.api"
 lint = [
     "ruff (>=0.15.15,<0.16.0)",
     "mypy (>=2.1.0,<3.0.0)",
-    "flake8 (>=7.3.0,<8.0.0)"
+    "flake8 (>=7.3.0,<8.0.0)",
+    "flake8-pyproject (>=1.2.4,<2.0.0)"
 ]
 
 
@@ -90,7 +91,7 @@ unfixable = []
 
 # === 📦 RUFF: Сортировка импортов ===
 [tool.ruff.lint.isort]
-known-first-party = ["BankFlow"]  # Имя проекта
+known-first-party = ["bankflow"]  # Имя проекта
 
 # === 🎨 RUFF: Форматирование кода ===
 [tool.ruff.format]
