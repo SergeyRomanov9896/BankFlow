@@ -1,4 +1,3 @@
-
 import json
 import logging
 import os
@@ -416,6 +415,7 @@ def generate_main_page_json(
     )
     return response
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     load = load_transactions_from_excel()
     print(get_cashback_by_category(prepare_dataframe(load)))
