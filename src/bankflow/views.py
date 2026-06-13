@@ -309,7 +309,7 @@ def get_top_categories(df: pd.DataFrame, top_n: int = 7) -> list[dict[str, Any]]
     special = expenses_df[expenses_df["Категория"].isin(special_categories)]
     regular = expenses_df[~expenses_df["Категория"].isin(special_categories)]
 
-    result: list[dict[str, Any]] = []
+    result = []
 
     if not special.empty:
         for cat, group in special.groupby("Категория"):
@@ -321,8 +321,8 @@ def get_top_categories(df: pd.DataFrame, top_n: int = 7) -> list[dict[str, Any]]
 
         top_categories = category_totals.head(top_n)
         for idx in range(len(top_categories)):
-            cat_name: str = str(top_categories.index[idx])
-            cat_total: float = float(top_categories.iloc[idx])
+            cat_name = str(top_categories.index[idx])
+            cat_total = float(top_categories.iloc[idx])
             result.append({"category": cat_name, "total": int(round(cat_total))})
 
         rest = category_totals.iloc[top_n:]
@@ -354,7 +354,7 @@ def get_cashback_by_category(df: pd.DataFrame, top_n: int = 3) -> list[dict[str,
 
     category_totals = expenses_df.groupby("Категория")["amount"].sum().sort_values(ascending=False)
 
-    result: list[dict[str, Any]] = []
+    result = []
     for cat, total in category_totals.head(top_n).items():
         cashback = int(total // 100)
         result.append({"category": cat, "total_spent": int(round(total)), "cashback": cashback})
@@ -399,7 +399,7 @@ def generate_main_page_json(
 
     settings = load_user_settings()
 
-    response: dict[str, Any] = {
+    response = {
         "greeting": get_greeting(date_time_str),
         "cards": get_card_statistics(df_filtered),
         "top_5_transactions": get_top_5_transactions(df_filtered),
@@ -414,8 +414,3 @@ def generate_main_page_json(
         "Сформирован ответ для главной страницы: %s", {k: v for k, v in response.items() if k in ("greeting",)}
     )
     return response
-
-
-if __name__ == "__main__":
-    load = load_transactions_from_excel()
-    print(get_cashback_by_category(prepare_dataframe(load)))
