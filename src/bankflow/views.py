@@ -10,7 +10,7 @@ from utils import load_transactions_from_excel, prepare_dataframe
 os.makedirs("logs", exist_ok=True)
 
 logger = logging.getLogger("bankflow.views")
-file_h = logging.FileHandler("logs/views.log", mode="a", encoding="utf-8")
+file_h = logging.FileHandler("logs/views.log", mode="w", encoding="utf-8")
 fmt = logging.Formatter("%(asctime)s | %(filename)s | %(levelname)s | %(message)s")
 file_h.setFormatter(fmt)
 logger.addHandler(file_h)
