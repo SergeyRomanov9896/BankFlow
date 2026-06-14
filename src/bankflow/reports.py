@@ -4,7 +4,8 @@ from collections.abc import Callable
 from typing import Any
 
 import pandas as pd
-from utils import load_transactions_from_excel, prepare_dataframe
+
+from .utils import load_transactions_from_excel, prepare_dataframe
 
 # Logging setup
 os.makedirs("logs", exist_ok=True)

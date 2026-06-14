@@ -5,7 +5,8 @@ from typing import Any
 
 import pandas as pd
 import requests
-from utils import load_transactions_from_excel, prepare_dataframe
+
+from .utils import load_transactions_from_excel, prepare_dataframe
 
 os.makedirs("logs", exist_ok=True)
 

@@ -2,7 +2,7 @@ import logging
 import os
 import re
 
-from utils import load_transactions_from_excel, prepare_dataframe
+from .utils import load_transactions_from_excel, prepare_dataframe
 
 # Logging setup
 os.makedirs("logs", exist_ok=True)
@@ -136,7 +136,3 @@ def search_by_phone(phone_query: str, excel_path: str = "data/operations.xlsx") 
         "results": results,
         "count": len(results),
     }
-
-
-if __name__ == "__main__":
-    print()
